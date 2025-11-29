@@ -2,9 +2,11 @@ import express from "express";
 // import { collectionName, connection } from "./dbconfig";
 import createConnection from "./connection/connect.js";
 import model from "./model/task-model.js"
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 await createConnection();
 

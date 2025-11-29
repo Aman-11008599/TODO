@@ -4,18 +4,15 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 
 function List() {
-  const [taskData, setTaskData] = useState();
-  // useEffect(()=>[
-  //   getListData()
-  // ],[])
-  // const getListData = async()=>{
-  //   let list=await fetch("");
-  //   list=await list.json();
-  //   if(list.success){
-  //     setTaskData(list.result);
-  //   }
-  //   console.log(list);
-  // }
+  const [taskData, setTaskData] = useState([]);
+
+  useEffect(()=>{
+   fetch('http://localhost:3200/tasks')
+    .then(res=>res.json())
+    .then(data=>{console.log("Fetched data:", data);  setTaskData(data); })
+    .catch(err=>console.log(err));
+  },[]);
+  
   return (
     <div className='list-container'>
         <h2>List</h2>
@@ -25,7 +22,21 @@ function List() {
             <li className='list-header'>Description</li>
             <li className='list-header'>Action</li>
             
-            <li className='list-item'>1</li>
+            {/* Render dynamic tasks */}
+            {taskData.map((task, index) => (
+              <React.Fragment key={task._id}>
+                <li className='list-item'>{index + 1}</li>
+                <li className='list-item'>{task.title}</li>
+                <li className='list-item'>{task.description}</li>
+                <li>
+                  <button className='delete-item'>Delete</button>
+                  <Link to={`/update/${task._id}`} className="update-item">Update</Link>
+                </li>
+              </React.Fragment>
+            ))}
+
+
+            {/* <li className='list-item'>1</li>
             <li className='list-item'>Meeting</li>
             <li className='list-item'>Lorem ipsum dolorate nihil, udantium natus accusantium.</li>
             <li><button className='delete-item'>Delete</button>
@@ -35,7 +46,7 @@ function List() {
             <li className='list-item'>Meeting</li>
             <li className='list-item'>Lorem ipsum dolorate nihil, udantium natus accusantium.</li>
             <li><button className='delete-item'>Delete</button>
-            <Link to={"/"} className="update-item">Update</Link></li>
+            <Link to={"/"} className="update-item">Update</Link></li> */}
         </ul>
     </div>
 
