@@ -28,6 +28,21 @@ app.get('/tasks', async(req,res)=>{
     res.send(r);
 })
 
+app.delete('/tasks/:id', async(req,res)=>{
+    await model.findByIdAndDelete(req.params.id);
+    res.send({"result":"successfully deleted"});
+});
+
+app.get('/tasks/:id', async (req, res) => {
+    const task = await model.findById(req.params.id);
+    res.send(task);
+});
+
+app.put('/update/:id', async(req,res)=>{
+    await model.findByIdAndUpdate(req.params.id, req.body, {new:true});
+    res.send({"result":"updated successfully"});
+})
+
 app.listen(3200);
 
 // app.post('/add-task', async(req,res)=>{

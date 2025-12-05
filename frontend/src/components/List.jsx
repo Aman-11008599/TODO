@@ -12,6 +12,11 @@ function List() {
     .then(data=>{console.log("Fetched data:", data);  setTaskData(data); })
     .catch(err=>console.log(err));
   },[]);
+
+  const handleDeleteItem=async(id)=>{
+    await fetch('http://localhost:3200/tasks/'+id, {method:'DELETE'});
+    setTaskData(taskData.filter(tasks=>tasks._id!=id));
+  }
   
   return (
     <div className='list-container'>
@@ -29,7 +34,7 @@ function List() {
                 <li className='list-item'>{task.title}</li>
                 <li className='list-item'>{task.description}</li>
                 <li>
-                  <button className='delete-item'>Delete</button>
+                  <button className='delete-item' onClick={()=>handleDeleteItem(task._id)}>Delete</button>
                   <Link to={`/update/${task._id}`} className="update-item">Update</Link>
                 </li>
               </React.Fragment>

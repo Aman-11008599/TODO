@@ -4,6 +4,7 @@ import MyNavbar from './components/MyNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddTask from './components/AddTask';
 import List from './components/List.jsx';
+import Update from './components/Update.jsx';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,8 +15,11 @@ function App() {
       <div>
         <MyNavbar/><br /><br />
         <Routes>
+          <Route path="/" element={<List />} />
           <Route path="/list" element={<List/>} />
           <Route path="/add" element={<AddTask/>} />
+          <Route path="/update/:id" element={<Update />} />
+
           {/* <Route path="/signup" element={<SignUp/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/update" element={<UpdateTask/>} /> */}
